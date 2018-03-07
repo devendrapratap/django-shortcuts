@@ -22,6 +22,7 @@ ALIASES = {
     'cpw': 'changepassword',
 
     # South
+    'mk' : 'makemigrations',
     'm'  : 'migrate',
     'sm' : 'schemamigration',
     'dm' : 'datamigration',
@@ -51,10 +52,11 @@ def run(command=None, *arguments):
     """
 
     if command is None:
-        sys.exit('django-shortcuts: No argument was supplied, please specify one.')
+        command = ''
+    else: command = ALIASES.get(command)
 
-    if command in ALIASES:
-        command = ALIASES[command]
+    if command is None:
+        sys.exit('django-shortcuts: invalid argument was supplied, please another one.')
 
     if command == 'startproject':
         return call('django-admin.py startproject %s' % ' '.join(arguments), shell=True)
